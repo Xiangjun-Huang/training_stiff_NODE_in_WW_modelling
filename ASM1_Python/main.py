@@ -32,17 +32,19 @@ model = model_initiation(noFeature, yMu, yStd, dyMu, dyStd, yMax, yMin, dyMax, d
 
 # collocation calculation
 coll_y, coll_dy = collocate_data_torch(t, true_y)
-plot_data(t, coll_y, true_y, y_labels=['Coll y','True y'], active_only=True, show_RMSE=True)
-plot_data(t, coll_dy, true_dy, y_labels=['Coll dy','True dy'], active_only=True, show_RMSE=True)
+# plot_data(t, coll_y, true_y, y_labels=['Coll Trajectory','True Trajectory'], active_only=True, show_RMSE=True)
+# plot_data(t, coll_dy, true_dy, y_labels=['Coll derivative','True derivative'], active_only=True, show_RMSE=True,
+#           y_name = ['$S_I\'$', '$S_S\'$', '$X_I\'$', '$X_S\'$', '$X_{BH}\'$', '$X_{BA}\'$', '$X_P\'$', '$S_O\'$', '$S_{NO}\'$', '$S_{NH}\'$', '$S_{ND}\'$', '$X_{ND}\'$', '$S_{ALK}\'$', '$S_{N_2}\'$', '$X_{INORG}\'$'],
+#           unit_name = ['mg COD/(l.d)', 'mg COD/(l.d)', 'mg COD/(l.d)', 'mg COD/(l.d)', 'mg COD/(l.d)', 'mg COD/(l.d)', 'mg COD/(l.d)', '$mg O_2/(l.d)$', 'mg N/(l.d)', 'mg N/(l.d)', 'mg N/(l.d)', 'mg N/(l.d)', 'eq ALK/(l.d)', 'mg N/(l.d)', 'mg COD/(l.d)'])
 
 # collocation training
 model, loss_list, grad_norm, lr_list = collocation_training(t, coll_y, coll_dy, model)
 pred_y = validation(model, t)
-plot_data(t, pred_y, true_y, y_labels=['Pred','True'], show_RMSE=True)
+plot_data(t, pred_y, true_y, y_labels=['Prediction','True'], show_RMSE=True)
 plot_loss_grad(loss_list, grad_norm, lr_list)
 
 # NODE training
 model, loss_list, grad_norm, lr_list = NODE_training(t, true_y, model)
 pred_y = validation(model, t)
-plot_data(t, pred_y, true_y, y_labels=['Pred','True'], show_RMSE=True)
+plot_data(t, pred_y, true_y, y_labels=['Prediction','True'], show_RMSE=True)
 plot_loss_grad(loss_list, grad_norm, lr_list)

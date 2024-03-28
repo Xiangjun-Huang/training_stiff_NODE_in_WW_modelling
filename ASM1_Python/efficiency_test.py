@@ -59,7 +59,7 @@ for i in range(num_test):
     # plot_loss_grad(loss_list, grad_norm, lr_list)
     result_test[i,0] = i
     result_test[i,1] = coll_end_time-coll_start_time
-    result_test[i,2] = RMSE
+    result_test[i,5] = RMSE
 
     # NODE training
     node_start_time = time.time()
@@ -70,9 +70,9 @@ for i in range(num_test):
     RMSE = sqrt(mse(pred_y, true_y)).numpy()
     # plot_data(t, pred_y, true_y, y_labels=['Pred','True'], show_RMSE=True)
     # plot_loss_grad(loss_list, grad_norm, lr_list)
-    result_test[i,3] = node_end_time-node_start_time
-    result_test[i,4] = RMSE
-    result_test[i,5] = (coll_end_time-coll_start_time) + (node_end_time-node_start_time)
+    result_test[i,2] = node_end_time-node_start_time
+    result_test[i,6] = RMSE
+    result_test[i,3] = (coll_end_time-coll_start_time) + (node_end_time-node_start_time)
 
     # ====================node only =====================
     # model initiation
@@ -87,8 +87,8 @@ for i in range(num_test):
     RMSE = sqrt(mse(pred_y, true_y)).numpy()
     # plot_data(t, pred_y, true_y, y_labels=['Pred','True'], show_RMSE=True)
     # plot_loss_grad(loss_list, grad_norm, lr_list)
-    result_test[i,6] = node_end_time-node_start_time
+    result_test[i,4] = node_end_time-node_start_time
     result_test[i,7] = RMSE
 
-np.savetxt(fname='ASM_CSTR/ASM1_NODE_package-upload/result/efficiency_test.csv', X=result_test, fmt='%.2f', delimiter=',',
-           header=','.join(['No','Coll Time','Coll RMSE','NODE Time','NODE RMSE','Incre Time','NODE only T', 'NODE only RMSE' ]))
+np.savetxt(fname='ASM_CSTR/ASM1_NODE_package-upload/data/efficiency_test.csv', X=result_test, fmt='%.2f', delimiter=',',
+           header=','.join(['No','I-Coll Time (s)','I-NODE Time (s)','Incremental Time (s)','NODE only Time (s)','I-Coll RMSE','I-NODE RMSE','NODE only RMSE' ]))

@@ -38,18 +38,17 @@ def IVP_data_generation(data_size = 1000, t_span = 0.25,
     # print("Generating data.")
     stoiP, kineP, contunity_check = default_stoichimetric_kinetic_value()
     with torch.no_grad():
-        true_y = odeint(mechanisticODE(noFeature, kineP, stoiP), true_y0, t, method='dopri5')
-        model_mech = mechanisticODE(noFeature, kineP, stoiP)
+        model_mechanistic = mechanisticODE(noFeature, kineP, stoiP)
+        true_y = odeint(model_mechanistic, true_y0, t, method='dopri5')
         
         true_dy =torch.zeros_like(true_y)
         for i in range(data_size):
-            true_dy[i,:,:] = model_mech(t,true_y[i,:,:])
+            true_dy[i,:,:] = model_mechanistic(t,true_y[i,:,:])
     print("Data generated.")
 
-    save_y = torch.hstack((t.unsqueeze(-1),torch.squeeze(true_y))).numpy()
-    save_dy = torch.hstack((t.unsqueeze(-1),torch.squeeze(true_dy))).numpy()
-
     if save_csv:
+        save_y = torch.hstack((t.unsqueeze(-1),torch.squeeze(true_y))).numpy()
+        save_dy = torch.hstack((t.unsqueeze(-1),torch.squeeze(true_dy))).numpy()
         np.savetxt(fname='ASM_CSTR/ASM1_NODE_package/data/true_y.csv', X=save_y, fmt='%.6f', delimiter=',', header=','.join(t_y_name), comments='')
         np.savetxt(fname='ASM_CSTR/ASM1_NODE_package/data/true_dy.csv', X=save_dy, fmt='%.6f', delimiter=',', header=','.join(t_y_name), comments='')
 

@@ -56,7 +56,7 @@ def plot_data(t, *ydata, y_labels=['True data'], active_only=True, show_RMSE = F
 
     plt.subplots_adjust(left=0.07, bottom=0.1, right=0.97, top=0.9, wspace=0.5,hspace=0.5)
     lines, labels = fig.axes[-1].get_legend_handles_labels()
-    fig.legend(lines, labels, loc='lower right', bbox_to_anchor=(0.95, 0.1))
+    fig.legend(lines, labels, loc='lower right', bbox_to_anchor=(0.97, 0.1))
 
     if show_RMSE:
         plt.text(1.4, 0.8, 'Overall RMSE = %.2f' % (RMSE), transform=ax.transAxes)

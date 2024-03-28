@@ -82,7 +82,7 @@ def collocation_training(t, y, dy, model, n_iters=2000, batch_time=16, batch_siz
             lr = lr_adjust[it]
             for param_group in optimizer.param_groups:
                 param_group['lr'] = lr
-            # print('Updating learning rate to {}'.format(lr))
+        #     # print('Updating learning rate to {}'.format(lr))
 
         if show_all_loss:
             print('Iter {:04d} | Loss {:.7f}'.format(it, loss.item()))
